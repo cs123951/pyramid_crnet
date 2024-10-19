@@ -1,0 +1,102 @@
+{
+    "exp_name": "Lung_07_I_Curvature_Pv1_gd_it_aug_affine_dis_params5",
+    "model_name": "PyramidCRNetv1",
+    "loss_name": "custom_losses.MULTI",
+    "optim_name": "AdamW",
+    "exp_path": "/mnt/data1/ljy/output/pyramid_rnn/Lung",
+    "seed": 42,
+    "lr": 0.0001,
+    "epochs": 500,
+    "ddp": true,
+    "earlystopping": 400,
+    "img_size": [
+        272,
+        240,
+        96
+    ],
+    "patch_batch_size": 2,
+    "patch_repeats": 1,
+    "data_params": {
+        "dataset_path": "/mnt/data1/ljy/working/lung272npy32",
+        "train_valid_dataset_name": "lung4d",
+        "batch_size": 1,
+        "num_workers": 0,
+        "pin_memory": false,
+        "augment": true,
+        "is_full": false,
+        "use_npy": true
+    },
+    "model_params": {
+        "device_ids": [
+            0
+        ],
+        "input_device": 0,
+        "output_device": 0,
+        "img_size": [
+            96,
+            96,
+            80
+        ],
+        "enc_feats": [
+            [
+                8,
+                8
+            ],
+            [
+                8,
+                16
+            ],
+            [
+                16,
+                32
+            ],
+            [
+                32,
+                32
+            ]
+        ],
+        "depthwise": false,
+        "num_layers": 2,
+        "fp16": false,
+        "filter_name": "guided",
+        "filter_params": {
+            "eps": 0.1,
+            "kernel_size": [
+                5,
+                5,
+                3
+            ],
+            "device": 0
+        },
+        "fuse_type": "composite"
+    },
+    "loss_params": {
+        "weight_option": "intensity_diff",
+        "lamb_weight": 100,
+        "names": [
+            "NGF",
+            "Curvature",
+            "Jac"
+        ],
+        "lambdas": [
+            1,
+            0.01,
+            1000
+        ],
+        "args": [
+            {
+                "eps": 1e-05
+            },
+            { },
+            { }
+        ]
+    },
+    "n_gpus": 1,
+    "process": 1,
+    "log_interval": 50,
+    "pretrained_weight_file_path": "",
+    "note": "",
+    "master_addr": "127.0.0.1",
+    "master_port": 25102,
+    "local_rank": 0
+}
